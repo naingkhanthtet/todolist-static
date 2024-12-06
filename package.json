@@ -15,6 +15,7 @@
     "@fontsource/lora": "^5.1.0",
     "@hookform/resolvers": "^3.9.0",
     "@mui/base": "^5.0.0-beta.58",
+    "@mui/icons-material": "^6.1.10",
     "@mui/joy": "^5.0.0-beta.48",
     "@mui/material": "^6.1.2",
     "@mui/system": "^6.1.2",
