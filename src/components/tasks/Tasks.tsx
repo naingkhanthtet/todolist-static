@@ -1,41 +1,37 @@
 import React, { useEffect, useState } from "react";
 // import TaskUD from "./TaskUD";
 import TaskAdd from "./TaskAdd";
-import { getCookie, setCookie } from "../../utils/useCookies";
+import { getCookie } from "../../utils/useCookies";
 import Task from "../../types/Task";
 import { ContentWidth } from "../styles/BasicComponents";
 
 const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  // get tasks from cookie at load
-  useEffect(() => {
-    const fetchTasks = () => {
-      const toDoTasks = getCookie("todotasks");
-      if (toDoTasks) {
-        setTasks(JSON.parse(toDoTasks));
-      }
-    };
-
-    fetchTasks();
-  }, []);
-
-  // set cookie data if the task changes
-  useEffect(() => {
-    setCookie("todotasks", JSON.stringify(tasks));
-  }, [tasks]);
-
-  const handleAddTask = (newTask: Task) => {
-    setTasks([...tasks, newTask]);
+  // get tasks from cookie
+  const fetchTasks = () => {
+    const toDoTasks = JSON.parse(getCookie("todotasks") || "[]");
+    setTasks(toDoTasks);
   };
+
+  useEffect(() => {
+    fetchTasks();
+
+    window.addEventListener("taskUpdated", fetchTasks);
+    return () => {
+      window.removeEventListener("taskUpdated", fetchTasks);
+    };
+  }, []);
 
   return (
     <>
-      <ContentWidth>
+      <ContentWidth sx={{ flexDirection: "column" }}>
         {tasks.length > 0 ? (
           <>
             {tasks.map((task) => (
-              <p>{task.task}</p>
+              <ul>
+                <li key={task.id}>{task.task}</li>
+              </ul>
             ))}
           </>
         ) : (
@@ -43,7 +39,7 @@ const Tasks: React.FC = () => {
         )}
       </ContentWidth>
       <ContentWidth>
-        <TaskAdd handleAddTask={handleAddTask} />
+        <TaskAdd />
       </ContentWidth>
     </>
   );
