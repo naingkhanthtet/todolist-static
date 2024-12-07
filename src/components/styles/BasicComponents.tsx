@@ -22,7 +22,7 @@ export const SecondIcons = styled(Box)({
   gridColumn: 2,
   fontSize: "1.5rem",
   display: "flex",
-  placeContent: "center",
+  placeContent: "end",
   placeItems: "center",
   cursor: "pointer",
 });
@@ -31,7 +31,7 @@ export const ThirdIcons = styled(Box)({
   gridColumn: 3,
   fontSize: "1.5rem",
   display: "flex",
-  placeContent: "center",
+  placeContent: "end",
   placeItems: "center",
   cursor: "pointer",
 });
