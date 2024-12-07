@@ -4,13 +4,26 @@ import { GridBox, ThirdIcons } from "../styles/BasicComponents";
 import { AddTaskField } from "../styles/TaskComponents";
 import AddIcon from "@mui/icons-material/Add";
 import Task from "../../types/Task";
+import { getCookie, setCookie } from "../../utils/useCookies";
 
-interface TaskAddProps {
-  handleAddTask: (newTask: Task) => void;
-}
-
-const TaskAdd: React.FC<TaskAddProps> = ({ handleAddTask }) => {
+const TaskAdd: React.FC = () => {
   const [newTask, setNewTask] = useState<string>("");
+
+  const handleAddTask = (newSanitizedTask: Task) => {
+    const taskFromCookies = JSON.parse(getCookie("todotasks") || "[]");
+
+    // Avoid duplicates
+    const isAlreadyAdded = taskFromCookies.some(
+      (task: Task) => task.id === newSanitizedTask.id
+    );
+
+    const updatedTasks = isAlreadyAdded
+      ? taskFromCookies
+      : [...taskFromCookies, { ...newSanitizedTask }];
+
+    setCookie("todotasks", JSON.stringify(updatedTasks));
+    window.dispatchEvent(new Event("taskUpdated"));
+  };
 
   const addTask = () => {
     const sanitizedTask: string = DOMPurify.sanitize(newTask);
