@@ -1,10 +1,17 @@
 import { Typography, Box, styled } from "@mui/material";
 
-export const ContentWidth = styled(Box)({
+export const AppWrapper = styled(Box)({
   display: "flex",
   padding: "20px",
   margin: "auto",
   maxWidth: "600px",
+  flexDirection: "column",
+  minHeight: "90vh",
+});
+
+export const ContentWrapper = styled(Box)({
+  flex: 1,
+  width: "100%",
 });
 
 export const GridBox = styled(Box)({
