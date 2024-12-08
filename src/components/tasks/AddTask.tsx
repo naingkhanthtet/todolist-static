@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DOMPurify from "dompurify";
-import { GridBox, ThirdIcons } from "../styles/BasicComponents";
-import { AddTaskField } from "../styles/TaskComponents";
 import AddIcon from "@mui/icons-material/Add";
+import { AddTaskField } from "../styles/TaskComponents";
+import { GridBox, ThirdIcons } from "../styles/BasicComponents";
 import Task from "../../types/Task";
 
 interface AddTaskProps {
@@ -30,12 +30,11 @@ const AddTask: React.FC<AddTaskProps> = ({ onAddTask }) => {
   return (
     <GridBox
       sx={{
-        marginTop: 3,
-        marginBottom: 3,
+        marginTop: 5,
+        marginBottom: 5,
       }}
     >
       <AddTaskField
-        className="new-title"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && addTask()}

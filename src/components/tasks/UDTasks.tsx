@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { TaskField, TaskTitle } from "../styles/TaskComponents";
 import { GridBox, SecondIcons, ThirdIcons } from "../styles/BasicComponents";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
@@ -43,42 +44,57 @@ const UDTasks: React.FC<UDTaskProps> = ({
     setEditIds(null);
   };
 
-  return (
-    <>
-      {tasks.map((task) => (
-        <GridBox key={task.id}>
-          {/* Task Title */}
-          {editIds === task.id ? (
-            <TaskField
-              value={taskEdits[task.id] || task.title}
-              onChange={(e) => handleTaskEdits(e, task)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  updateTask(task);
-                }
-              }}
-              onBlur={() => updateTask(task)}
-              multiline
-              variant="standard"
-              inputProps={{
-                maxLength: 100,
-              }}
-            />
-          ) : (
-            <TaskTitle onClick={() => setEditIds(task.id)}>
-              {task.title}
-            </TaskTitle>
-          )}
+  const animationVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: 20 },
+  };
 
-          <SecondIcons>
-            <PanoramaFishEyeIcon onClick={() => onMoveToFinished(task)} />
-          </SecondIcons>
-          <ThirdIcons>
-            <DeleteIcon onClick={() => onDeleteTask(task.id)} />
-          </ThirdIcons>
-        </GridBox>
+  return (
+    <AnimatePresence>
+      {tasks.map((task) => (
+        <motion.div
+          key={task.id}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={animationVariants}
+          transition={{ duration: 0.5 }}
+        >
+          <GridBox>
+            {/* Task Title */}
+            {editIds === task.id ? (
+              <TaskField
+                value={taskEdits[task.id] || task.title}
+                onChange={(e) => handleTaskEdits(e, task)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    updateTask(task);
+                  }
+                }}
+                onBlur={() => updateTask(task)}
+                multiline
+                variant="standard"
+                inputProps={{
+                  maxLength: 100,
+                }}
+              />
+            ) : (
+              <TaskTitle onClick={() => setEditIds(task.id)}>
+                {task.title}
+              </TaskTitle>
+            )}
+
+            <SecondIcons>
+              <PanoramaFishEyeIcon onClick={() => onMoveToFinished(task)} />
+            </SecondIcons>
+            <ThirdIcons>
+              <DeleteIcon onClick={() => onDeleteTask(task.id)} />
+            </ThirdIcons>
+          </GridBox>
+        </motion.div>
       ))}
-    </>
+    </AnimatePresence>
   );
 };
 
