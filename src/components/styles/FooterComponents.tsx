@@ -5,7 +5,7 @@ export const FooterContents = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   width: "100%",
-  marginTop: 100,
+  marginTop: "auto",
   borderTop: `1px solid ${theme.palette.text.primary}`,
   paddingTop: 10,
 }));
