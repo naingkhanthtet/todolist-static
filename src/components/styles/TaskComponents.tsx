@@ -1,13 +1,19 @@
-import { TextField, styled } from "@mui/material";
+import { Box, TextField, styled } from "@mui/material";
+
+export const TaskTitle = styled(Box)({
+  gridColumn: 1,
+
+  paddingTop: 10,
+  paddingBottom: 10,
+});
 
 export const TaskField = styled(TextField)(({ theme }) => ({
   gridColumn: 1,
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   resize: "none",
-  textAlign: "left",
-  fontFamily: "Lora",
-  padding: 0,
+  paddingTop: 10,
+  paddingBottom: 10,
 }));
 
 export const AddTaskField = styled(TextField)(({ theme }) => ({
@@ -15,7 +21,5 @@ export const AddTaskField = styled(TextField)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   resize: "none",
-  textAlign: "left",
-  fontFamily: "Lora",
   padding: 0,
 }));
