@@ -1,5 +1,5 @@
 export default interface Task {
   id: number;
-  task: string;
+  title: string;
   completed: boolean;
 }
